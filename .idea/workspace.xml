@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61c66772-efae-48a6-b322-27a6b74cfc89" name="Changes" comment="Implemented findTopThreePlayers to return the updated scoreboard to the clients when a player finishes their game">
+    <list default="true" id="61c66772-efae-48a6-b322-27a6b74cfc89" name="Changes" comment="Fixed issue with getting blank board on new game.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameLogic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ServerGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +103,7 @@
       <workItem from="1701379680274" duration="5097000" />
       <workItem from="1701552665647" duration="4476000" />
       <workItem from="1701561423038" duration="4362000" />
-      <workItem from="1701617730733" duration="18215000" />
+      <workItem from="1701617730733" duration="19443000" />
     </task>
     <task id="LOCAL-00001" summary="Added MinMax algorithm using a string to represent the game board">
       <option name="closed" value="true" />
@@ -137,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701643560052</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixed issue with getting blank board on new game.">
+      <option name="closed" value="true" />
+      <created>1701644601407</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1701644601407</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +156,7 @@
     <MESSAGE value="Added MinMax algorithm using a string to represent the game board" />
     <MESSAGE value="Updated AL_MinMax to accept input using string and created Server.java containing ServerThread and ClientThread initial implementations" />
     <MESSAGE value="Implemented findTopThreePlayers to return the updated scoreboard to the clients when a player finishes their game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented findTopThreePlayers to return the updated scoreboard to the clients when a player finishes their game" />
+    <MESSAGE value="Fixed issue with getting blank board on new game." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed issue with getting blank board on new game." />
   </component>
 </project>

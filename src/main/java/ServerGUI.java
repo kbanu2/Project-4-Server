@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.Serializable;
+import java.util.function.Consumer;
 
 public class ServerGUI extends Application {
     private TextField portTextField = new TextField();
@@ -23,12 +27,16 @@ public class ServerGUI extends Application {
         primaryStage.setTitle("Create Server");
         primaryStage.setScene(createSetUpScene());
 
+        Consumer<Serializable> callback = data -> {
+            Platform.runLater(() -> serverLogs.getItems().add(data.toString()));
+        };
+
         createServer.setOnAction(event -> {
             primaryStage.setTitle("Server Logs");
 
             try{
                 //ToDo: Implement code to create server thread with input port
-                Server server = new Server(1000);
+                Server server = new Server(callback,1000);
             }
             catch (Exception e){
                 System.out.println("Could not start server");

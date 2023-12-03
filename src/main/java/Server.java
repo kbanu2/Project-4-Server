@@ -2,18 +2,22 @@ import javafx.scene.control.ListView;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Server {
     int port;
+    Consumer<Serializable> callback;
     ServerThread serverThread;
     HashMap<ClientThread, Integer> playerRankings;
 
-    public Server(int port){
+    public Server(Consumer<Serializable> callback, int port){
         this.port = port;
+        this.callback = callback;
         playerRankings = new HashMap<>();
         serverThread = new ServerThread();
         serverThread.start();
@@ -22,6 +26,7 @@ public class Server {
         @Override
         public void run(){
             try (ServerSocket serverSocket = new ServerSocket(port);){
+                callback.accept("Server is running on port: " + port);
                 while(true){
                     ClientThread clientThread = new ClientThread(serverSocket.accept());
                     synchronized (playerRankings){
@@ -53,6 +58,8 @@ public class Server {
                 out = new ObjectOutputStream(socket.getOutputStream());
                 socket.setTcpNoDelay(true);
                 username = in.readObject().toString();
+
+                callback.accept("Client '" + username + "' has connected");
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -61,6 +68,7 @@ public class Server {
                 while (true){
                     gameDifficulty = in.readObject().toString(); //Game difficulty selection
                     GameLogic gameLogic = new GameLogic(gameDifficulty);
+                    callback.accept(username + " is playing a new game on " + gameDifficulty + " difficulty");
 
                     synchronized (playerRankings){
                         findTopThreePlayers(gameState);
@@ -89,6 +97,16 @@ public class Server {
                         int score = playerRankings.get(this);
                         playerRankings.put(this, score + gameLogic.pointsWon());
 
+                        if (gameLogic.clientWon){
+                            callback.accept(username + " has won their game and has " + playerRankings.get(this) + " points!");
+                        }
+                        else if (gameLogic.draw){
+                            callback.accept(username + " has drawn their game with the server");
+                        }
+                        else{
+                            callback.accept(username + " has lost their game to the server!");
+                        }
+
                         playerRankings.forEach((clientThread, integer) -> {
                             clientThread.findTopThreePlayers(clientThread.gameState);
                         });
@@ -97,9 +115,8 @@ public class Server {
 
             }catch (Exception e){
                 playerRankings.remove(this);
-                System.out.println("Client has disconnected");
+                callback.accept(username + " has disconnected");
             }
-
         }
 
         private void findTopThreePlayers(GameState gameState){
