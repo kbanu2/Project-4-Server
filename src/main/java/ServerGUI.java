@@ -23,13 +23,12 @@ public class ServerGUI extends Application {
         primaryStage.setTitle("Create Server");
         primaryStage.setScene(createSetUpScene());
 
-        AI_MinMax aiMinMax = new AI_MinMax("b b X X b b O O b         ");
-
         createServer.setOnAction(event -> {
             primaryStage.setTitle("Server Logs");
 
             try{
                 //ToDo: Implement code to create server thread with input port
+                Server server = new Server(1000);
             }
             catch (Exception e){
                 System.out.println("Could not start server");

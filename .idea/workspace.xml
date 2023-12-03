@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61c66772-efae-48a6-b322-27a6b74cfc89" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/AI_MinMax.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MinMax.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ServerGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AI_MinMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AI_MinMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ServerGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaFXApplication" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -106,11 +102,34 @@
       <updated>1701273604073</updated>
       <workItem from="1701273605254" duration="647000" />
       <workItem from="1701379680274" duration="5097000" />
-      <workItem from="1701552665647" duration="1454000" />
+      <workItem from="1701552665647" duration="4476000" />
+      <workItem from="1701561423038" duration="4252000" />
     </task>
+    <task id="LOCAL-00001" summary="Added MinMax algorithm using a string to represent the game board">
+      <option name="closed" value="true" />
+      <created>1701555309300</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701555309300</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added MinMax algorithm using a string to represent the game board">
+      <option name="closed" value="true" />
+      <created>1701555330094</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701555330094</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ad" />
+    <MESSAGE value="Added MinMax algorithm using a string to represent the game board" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added MinMax algorithm using a string to represent the game board" />
   </component>
 </project>

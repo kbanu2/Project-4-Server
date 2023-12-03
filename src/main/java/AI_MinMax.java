@@ -13,9 +13,9 @@ import java.util.Scanner;
  */
 public class AI_MinMax {
 	
-	private String[] init_board;
+	public String[] init_board;
 	
-	private ArrayList<Node> movesList;
+	public ArrayList<Node> movesList;
 	
 	AI_MinMax(String gameBoard)
 	{
