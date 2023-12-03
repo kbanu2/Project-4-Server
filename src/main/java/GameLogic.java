@@ -146,7 +146,7 @@ public class GameLogic {
             return true;
         }
 
-        if (gameBoard[3].charAt(0) == player && gameBoard[4].charAt(0) == player && gameBoard[6].charAt(0) == player){
+        if (gameBoard[2].charAt(0) == player && gameBoard[4].charAt(0) == player && gameBoard[6].charAt(0) == player){
             gameOver = true;
             return true;
         }

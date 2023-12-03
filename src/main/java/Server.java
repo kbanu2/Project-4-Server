@@ -92,8 +92,6 @@ public class Server {
                         playerRankings.forEach((clientThread, integer) -> {
                             clientThread.findTopThreePlayers(clientThread.gameState);
                         });
-
-                        out.writeObject(gameState);
                     }
                 }
 
