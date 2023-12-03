@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61c66772-efae-48a6-b322-27a6b74cfc89" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Server.java" afterDir="false" />
+    <list default="true" id="61c66772-efae-48a6-b322-27a6b74cfc89" name="Changes" comment="Updated AL_MinMax to accept input using string and created Server.java containing ServerThread and ClientThread initial implementations">
+      <change afterPath="$PROJECT_DIR$/src/main/java/GameLogic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AI_MinMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AI_MinMax.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ServerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +103,8 @@
       <workItem from="1701273605254" duration="647000" />
       <workItem from="1701379680274" duration="5097000" />
       <workItem from="1701552665647" duration="4476000" />
-      <workItem from="1701561423038" duration="4252000" />
+      <workItem from="1701561423038" duration="4362000" />
+      <workItem from="1701617730733" duration="16817000" />
     </task>
     <task id="LOCAL-00001" summary="Added MinMax algorithm using a string to represent the game board">
       <option name="closed" value="true" />
@@ -121,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701555330094</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated AL_MinMax to accept input using string and created Server.java containing ServerThread and ClientThread initial implementations">
+      <option name="closed" value="true" />
+      <created>1701578198414</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701578198414</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +139,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Ad" />
     <MESSAGE value="Added MinMax algorithm using a string to represent the game board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added MinMax algorithm using a string to represent the game board" />
+    <MESSAGE value="Updated AL_MinMax to accept input using string and created Server.java containing ServerThread and ClientThread initial implementations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated AL_MinMax to accept input using string and created Server.java containing ServerThread and ClientThread initial implementations" />
   </component>
 </project>

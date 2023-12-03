@@ -1,15 +1,20 @@
+import javafx.scene.control.ListView;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Server {
     int port;
     ServerThread serverThread;
+    HashMap<ClientThread, Integer> playerRankings;
 
     public Server(int port){
         this.port = port;
+        playerRankings = new HashMap<>();
         serverThread = new ServerThread();
         serverThread.start();
     }
@@ -19,6 +24,9 @@ public class Server {
             try (ServerSocket serverSocket = new ServerSocket(port);){
                 while(true){
                     ClientThread clientThread = new ClientThread(serverSocket.accept());
+                    synchronized (playerRankings){
+                        playerRankings.put(clientThread, 0);
+                    }
                     clientThread.start();
                 }
             }catch (Exception e){
@@ -29,7 +37,9 @@ public class Server {
 
     public class ClientThread extends Thread{
         public String username;
+        public String gameDifficulty;
         private Socket socket;
+        GameState gameState = new GameState();
         ObjectInputStream in;
         ObjectOutputStream out;
         public ClientThread(Socket socket){
@@ -42,32 +52,80 @@ public class Server {
                 in = new ObjectInputStream(socket.getInputStream());
                 out = new ObjectOutputStream(socket.getOutputStream());
                 socket.setTcpNoDelay(true);
+                username = in.readObject().toString();
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             try{
-                while(true){
-                    String gameBoard = in.readObject().toString();
-                    out.writeObject(createExpertMove(gameBoard));
+                while (true){
+                    gameDifficulty = in.readObject().toString(); //Game difficulty selection
+                    GameLogic gameLogic = new GameLogic(gameDifficulty);
+
+                    synchronized (playerRankings){
+                        findTopThreePlayers(gameState);
+                    }
+
+                    out.reset();
+                    out.writeObject(gameState);
+
+                    while(!gameLogic.isGameOver()){ //While game active
+                        gameLogic.updateClientGameBoard(in.readObject().toString()); //Read in gameBoard
+
+                        gameState.gameBoard = gameLogic.createServerMove();
+                        gameState.gameOver = gameLogic.isGameOver();
+                        gameState.clientWon = gameLogic.clientWon;
+                        gameState.draw = gameLogic.draw;
+
+                        out.reset();
+                        out.writeObject(gameState);
+                    }
+
+
+                    //Create new gameState for current player and update all of the gameStates with the new rankings
+                    synchronized (playerRankings){
+                        gameState = new GameState();
+
+                        int score = playerRankings.get(this);
+                        playerRankings.put(this, score + gameLogic.pointsWon());
+
+                        playerRankings.forEach((clientThread, integer) -> {
+                            clientThread.findTopThreePlayers(clientThread.gameState);
+                        });
+
+                        out.writeObject(gameState);
+                    }
                 }
+
             }catch (Exception e){
+                playerRankings.remove(this);
                 System.out.println("Client has disconnected");
-                e.printStackTrace();
             }
 
         }
 
-        public String createExpertMove(String gameBoard){
-            AI_MinMax aiMinMax = new AI_MinMax(gameBoard);
+        private void findTopThreePlayers(GameState gameState){
+            LinkedHashMap<ClientThread, Integer> sortedMap = playerRankings.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
-            aiMinMax.movesList.forEach(node -> {
-                if (node.getMinMax() == 10){
-                    aiMinMax.init_board[node.getMovedTo() - 1] = "X";
+            Set keySet = sortedMap.keySet();
+
+            gameState.topScoreNames.clear();
+            gameState.topScorePoints.clear();
+
+            int i = 0;
+            for (Object key : keySet){
+                if (i < 3 && sortedMap.get(key) != 0){
+                    gameState.topScoreNames.add(((ClientThread) key ).username);
+                    gameState.topScorePoints.add(String.valueOf(sortedMap.get(key)));
+                    i++;
                 }
-            });
-
-            return Arrays.toString(aiMinMax.init_board);
+            }
         }
     }
 }
