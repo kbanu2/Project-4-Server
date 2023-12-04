@@ -36,7 +36,7 @@ public class ServerGUI extends Application {
 
             try{
                 //ToDo: Implement code to create server thread with input port
-                Server server = new Server(callback,1000);
+                Server server = new Server(callback,Integer.valueOf(portTextField.getText()));
             }
             catch (Exception e){
                 System.out.println("Could not start server");
