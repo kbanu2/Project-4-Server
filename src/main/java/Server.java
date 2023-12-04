@@ -70,9 +70,7 @@ public class Server {
                     GameLogic gameLogic = new GameLogic(gameDifficulty);
                     callback.accept(username + " is playing a new game on " + gameDifficulty + " difficulty");
 
-                    synchronized (playerRankings){
-                        findTopThreePlayers(gameState);
-                    }
+                    findTopThreePlayers(gameState);
 
                     out.reset();
                     out.writeObject(gameState);
@@ -81,6 +79,7 @@ public class Server {
                         gameLogic.updateClientGameBoard(in.readObject().toString()); //Read in gameBoard
 
                         gameState.gameBoard = gameLogic.createServerMove();
+                        gameLogic.checkIfGameWon(gameState.gameBoard, 'X');
                         gameState.gameOver = gameLogic.isGameOver();
                         gameState.clientWon = gameLogic.clientWon;
                         gameState.draw = gameLogic.draw;
@@ -90,7 +89,7 @@ public class Server {
                     }
 
 
-                    //Create new gameState for current player and update all of the gameStates with the new rankings
+                    //Create new gameState for current player and update all the gameStates with the new rankings
                     synchronized (playerRankings){
                         gameState = new GameState();
 
@@ -112,33 +111,36 @@ public class Server {
                         });
                     }
                 }
-
             }catch (Exception e){
-                playerRankings.remove(this);
+                synchronized (playerRankings){
+                    playerRankings.remove(this);
+                }
                 callback.accept(username + " has disconnected");
             }
         }
 
         private void findTopThreePlayers(GameState gameState){
-            LinkedHashMap<ClientThread, Integer> sortedMap = playerRankings.entrySet()
-                    .stream()
-                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            Map.Entry::getValue,
-                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+            synchronized (playerRankings){
+                LinkedHashMap<ClientThread, Integer> sortedMap = playerRankings.entrySet()
+                        .stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
-            Set keySet = sortedMap.keySet();
+                Set keySet = sortedMap.keySet();
 
-            gameState.topScoreNames.clear();
-            gameState.topScorePoints.clear();
+                gameState.topScoreNames.clear();
+                gameState.topScorePoints.clear();
 
-            int i = 0;
-            for (Object key : keySet){
-                if (i < 3 && sortedMap.get(key) != 0){
-                    gameState.topScoreNames.add(((ClientThread) key ).username);
-                    gameState.topScorePoints.add(String.valueOf(sortedMap.get(key)));
-                    i++;
+                int i = 0;
+                for (Object key : keySet){
+                    if (i < 3 && sortedMap.get(key) != 0){
+                        gameState.topScoreNames.add(((ClientThread) key ).username);
+                        gameState.topScorePoints.add(String.valueOf(sortedMap.get(key)));
+                        i++;
+                    }
                 }
             }
         }

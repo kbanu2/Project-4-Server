@@ -127,7 +127,7 @@ public class GameLogic {
     }
 
     public boolean checkIfGameWon(String[] gameBoard, char player){ //X X X  O O O  X X X
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 9; i += 3){
             if (gameBoard[i].charAt(0) == player && gameBoard[i + 1].charAt(0) == player && gameBoard[i + 2].charAt(0) == player){
                 gameOver = true;
                 return true;
